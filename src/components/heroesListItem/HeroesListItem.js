@@ -1,6 +1,11 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { heroesFetched } from '../../actions';
 
 const HeroesListItem = ({id, name, description, element}) => {    
     let elementClassName;
+
+    const { heroes } = useSelector(state => state);
+    const dispatch = useDispatch();
 
     switch (element) {
         case 'fire':
@@ -21,6 +26,9 @@ const HeroesListItem = ({id, name, description, element}) => {
 
     const deleteItem = () => {
         console.log(id);
+        let newArray = heroes.filter(item => item.id !== id);
+        dispatch(heroesFetched(newArray))
+        console.log(newArray);
     }
 
     return (
