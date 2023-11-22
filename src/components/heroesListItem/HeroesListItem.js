@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { heroesFetched } from '../../actions';
+import {useHttp} from '../../hooks/http.hook';
+
 
 const HeroesListItem = ({id, name, description, element}) => {    
     let elementClassName;
 
     const { heroes } = useSelector(state => state);
     const dispatch = useDispatch();
+    const { deleteHero } = useHttp();
+
 
     switch (element) {
         case 'fire':
@@ -28,7 +32,15 @@ const HeroesListItem = ({id, name, description, element}) => {
         console.log(id);
         let newArray = heroes.filter(item => item.id !== id);
         dispatch(heroesFetched(newArray))
-        console.log(newArray);
+
+
+        const options = {
+            url: `http://localhost:3001/heroes/${id}`,
+        };
+
+        deleteHero(options)
+            .then(data => console.log(data));
+            
     }
 
     return (

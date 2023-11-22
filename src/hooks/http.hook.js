@@ -57,12 +57,33 @@ export const useHttp = () => {
         }
     }, []);
 
+    const deleteHero = useCallback(async ({url, method = 'DELETE', body = null, headers = {'Content-Type': 'application/json'}}) => {
+        console.log(body, url);
+        
+        try {
+            const response = await fetch(url, {method, body, headers});
+
+            if (!response.ok) {
+                throw new Error(`Could not fetch ${url}, status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(`data from fetch hook - ${data}`);
+            
+            return data;
+        } catch(e) {
+            throw e;
+        }
+    }, []);
+
 
 
 
     return {request, 
             addNewHero,
-            getFilter
+            getFilter,
+            deleteHero
+            
             // clearError, 
             // process, 
             // setProcess
