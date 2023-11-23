@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { heroesFetched } from '../../actions';
+import { heroesFiltred, heroesFetched } from '../../actions';
 import {useHttp} from '../../hooks/http.hook';
 
 
@@ -31,6 +31,7 @@ const HeroesListItem = ({id, name, description, element}) => {
     const deleteItem = () => {
         console.log(id);
         let newArray = heroes.filter(item => item.id !== id);
+        dispatch(heroesFiltred(newArray))
         dispatch(heroesFetched(newArray))
 
 

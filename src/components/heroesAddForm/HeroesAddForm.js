@@ -2,7 +2,7 @@ import {useHttp} from '../../hooks/http.hook';
 
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { heroesFetched } from '../../actions';
+import { heroesFetched, heroesFiltred } from '../../actions';
 import { v4 as uuidv4 } from 'uuid';
 
 

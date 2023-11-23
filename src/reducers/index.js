@@ -22,6 +22,18 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 heroesLoadingStatus: 'error'
             }
+        // case 'HEROES_FILTRED_FETCHED':
+        //     return {
+        //         ...state,
+        //         heroes: 
+        //         heroesLoadingStatus: 'idle'
+        //     }
+
+        case 'HEROES_FILTRED':
+            return {
+                ...state,
+                filters: action.payload
+            }
         default: return state
     }
 }
