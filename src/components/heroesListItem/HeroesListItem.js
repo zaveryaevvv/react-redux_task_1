@@ -31,7 +31,6 @@ const HeroesListItem = ({id, name, description, element}) => {
     const deleteItem = () => {
         console.log(id);
         let newArray = heroes.filter(item => item.id !== id);
-        dispatch(heroesFiltred(newArray))
         dispatch(heroesFetched(newArray))
 
 

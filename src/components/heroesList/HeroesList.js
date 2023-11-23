@@ -2,13 +2,13 @@ import {useHttp} from '../../hooks/http.hook';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { heroesFetching, heroesFiltred, heroesFetched, heroesFetchingError } from '../../actions';
+import { heroesFetching, heroesFetched, heroesFetchingError } from '../../actions';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
 
 const HeroesList = () => {
-    const {filters, heroesLoadingStatus} = useSelector(state => state);
+    const {filters, heroes ,heroesLoadingStatus} = useSelector(state => state);
     const dispatch = useDispatch();
     const {request } = useHttp();
 
@@ -17,7 +17,6 @@ const HeroesList = () => {
         request("http://localhost:3001/heroes")
             .then(data => {
                 dispatch(heroesFetched(data));
-                dispatch(heroesFiltred(data));
             })
             .catch(() => dispatch(heroesFetchingError()))
 
@@ -30,17 +29,18 @@ const HeroesList = () => {
         return <h5 className="text-center mt-5">Ошибка загрузки</h5>
     }
 
-    const renderHeroesList = (arr) => {
+    const renderHeroesList = (arr, filters) => {        
         if (arr.length === 0) {
             return <h5 className="text-center mt-5">Героев пока нет</h5>
         }
 
-        return arr.map(({id, ...props}) => {
-            return <HeroesListItem key={id} id={id} {...props}/>
-        })
+        return arr.map(({id, element, ...props}) => {
+            if(element === filters || filters === "all") {
+            return <HeroesListItem key={id} id={id} element={element} {...props}/>
+        }})
     }
 
-    const elements = renderHeroesList(filters);
+    const elements = renderHeroesList(heroes, filters);
     return (
         <ul>
             {elements}

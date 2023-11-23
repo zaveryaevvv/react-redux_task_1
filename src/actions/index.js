@@ -11,12 +11,6 @@ export const heroesFetched = (heroes) => {
     }
 }
 
-// export const heroesFiltredFetched = (heroes) => {
-//     return {
-//         type: 'HEROES_FILTRED_FETCHED',
-//         payload: {heroes}
-//     }
-// }
 
 export const heroesFiltred = (heroes) => {
     return {

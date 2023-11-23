@@ -4,44 +4,11 @@ import { heroesFiltred, heroesFetched } from "../../actions";
 
 
 const HeroesFilters = () => {
-    const [current, setCurrent] = useState("all")
-
     const {heroes} = useSelector(state => state)
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        console.log(heroes);
-        
-        dispatch(heroesFetched(heroes));
-    }, [])
-
-    useEffect(() => {
-        switch(current) {
-            case "all":
-                dispatch(heroesFiltred(heroes));
-                break;
-
-            case "fire":
-                dispatch(heroesFiltred(heroes.filter(item => item.element == "fire")));
-                break;
-            
-            case "water":
-                dispatch(heroesFiltred(heroes.filter(item => item.element == "water")));
-                break;
-
-            case "wind":
-                dispatch(heroesFiltred(heroes.filter(item => item.element == "wind")));
-                break;
-
-            case "earth":
-                dispatch(heroesFiltred(heroes.filter(item => item.element == "earth")));
-                break;
-        }
-    }, [current])
-    
     
     const filterEl = (type) => {
-        setCurrent(type)
+        dispatch(heroesFiltred(type));
     }
 
     return (
