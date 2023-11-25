@@ -1,15 +1,7 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { heroesFiltred, heroesFetched } from '../../actions';
-import {useHttp} from '../../hooks/http.hook';
 
+const HeroesListItem = ({name, description, element, onDelete}) => {
 
-const HeroesListItem = ({id, name, description, element}) => {    
     let elementClassName;
-
-    const { heroes } = useSelector(state => state);
-    const dispatch = useDispatch();
-    const { deleteHero } = useHttp();
-
 
     switch (element) {
         case 'fire':
@@ -28,21 +20,6 @@ const HeroesListItem = ({id, name, description, element}) => {
             elementClassName = 'bg-warning bg-gradient';
     }
 
-    const deleteItem = () => {
-        console.log(id);
-        let newArray = heroes.filter(item => item.id !== id);
-        dispatch(heroesFetched(newArray))
-
-
-        const options = {
-            url: `http://localhost:3001/heroes/${id}`,
-        };
-
-        deleteHero(options)
-            .then(data => console.log(data));
-            
-    }
-
     return (
         <li 
             className={`card flex-row mb-4 shadow-lg text-white ${elementClassName}`}>
@@ -55,8 +32,9 @@ const HeroesListItem = ({id, name, description, element}) => {
                 <h3 className="card-title">{name}</h3>
                 <p className="card-text">{description}</p>
             </div>
-            <span className="position-absolute top-0 start-100 translate-middle badge border rounded-pill bg-light">
-                <button onClick={() => deleteItem()} type="button" className="btn-close btn-close" aria-label="Close"></button>
+            <span onClick={onDelete} 
+                className="position-absolute top-0 start-100 translate-middle badge border rounded-pill bg-light">
+                <button type="button" className="btn-close btn-close" aria-label="Close"></button>
             </span>
         </li>
     )
